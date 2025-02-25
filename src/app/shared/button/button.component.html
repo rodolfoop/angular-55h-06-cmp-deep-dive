@@ -1,2 +1,6 @@
-<span>Logout</span>
-<span class="icon"> → </span>
+<span>
+  <!-- It will match the rest of the content. -->
+  <ng-content />
+</span>
+<!-- It will match a class .icon -->
+<ng-content select=".icon" />
