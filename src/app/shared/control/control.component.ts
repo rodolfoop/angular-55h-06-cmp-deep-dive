@@ -1,5 +1,7 @@
 import {
   AfterContentInit,
+  afterNextRender,
+  afterRender,
   Component,
   ContentChild,
   contentChild,
@@ -25,16 +27,30 @@ export class ControlComponent implements AfterContentInit {
   label = input.required();
   private el = inject(ElementRef);
   // @ContentChild('myInput') private control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
-  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('myInput');
+  private control =
+    contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('myInput');
 
+  constructor() {
+    // Executed whenever anything changes anywhere in the entire application.
+    afterRender(() => {
+      console.log('constructor - afterRender');
+    });
+
+    // Executed after the next change anywhere in the entire application.
+    afterNextRender(() => {
+      console.log('constructor - afterNextRender');
+    });
+  }
+
+  // Refer to the component to which they belong.
   ngAfterContentInit(): void {
-    // I can safely access @ContentChild or contentChild function.
+    
   }
 
   onClick() {
     console.log('Control clicked');
     console.log(this.el);
     // console.log(this.control); // For @ContentChild
-    console.log(this.control());  // For contentChild
+    console.log(this.control()); // For contentChild
   }
 }
