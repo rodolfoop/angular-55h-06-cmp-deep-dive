@@ -1,8 +1,8 @@
 import {
   Component,
+  ContentChild,
+  contentChild,
   ElementRef,
-  HostBinding,
-  HostListener,
   inject,
   input,
   ViewEncapsulation,
@@ -23,9 +23,13 @@ import {
 export class ControlComponent {
   label = input.required();
   private el = inject(ElementRef);
+  // @ContentChild('myInput') private control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
+  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('myInput');
 
   onClick() {
     console.log('Control clicked');
     console.log(this.el);
+    // console.log(this.control); // For @ContentChild
+    console.log(this.control());  // For contentChild
   }
 }
