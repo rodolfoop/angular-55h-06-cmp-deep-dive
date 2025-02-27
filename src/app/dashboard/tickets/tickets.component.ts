@@ -13,13 +13,23 @@ import { TicketComponent } from './ticket/ticket.component';
 export class TicketsComponent {
   tickets: Ticket[] = [];
 
-  onAdd(ticketData: {title: string; text: string}){
+  onAdd(ticketData: {title: string; request: string}){
     const ticket: Ticket = {
       title: ticketData.title,
-      request: ticketData.text,
+      request: ticketData.request,
       id: Math.random().toString(),
       status: 'open'
     };
     this.tickets.push(ticket);
+  }
+
+  onCloseTicket(id: string) {
+    this.tickets = this.tickets.map((ticket) => {
+      if (ticket.id === id) {
+        // ... is the javascript spread operator
+        return { ...ticket, status: 'closed'}
+      }
+      return ticket;
+    });
   }
 }
