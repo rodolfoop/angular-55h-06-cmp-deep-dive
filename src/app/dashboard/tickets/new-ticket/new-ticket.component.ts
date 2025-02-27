@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, output, ViewChild } from '@angular/core';
 import { ControlComponent } from '../../../shared/control/control.component';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { FormsModule } from '@angular/forms';
@@ -13,12 +13,13 @@ import { FormsModule } from '@angular/forms';
 export class NewTicketComponent implements OnInit, AfterViewInit{
   @ViewChild('myForm') myFormVar?: ElementRef<HTMLFormElement>;
   // private myFormVar = viewChild.required<ElementRef<HTMLFormElement>>('myForm');
+  // @Output() add = new EventEmmitter();
+
+  // Modern way of emitting events
+  add = output<{title: string; text: string}>();
 
   onSubmit(title: string, ticketText: string) {
-    console.log('New ticket submitted');
-    console.log('Title:', title);
-    console.log('Text:', ticketText);
-
+    this.add.emit({title, text: ticketText});
     this.myFormVar?.nativeElement.reset();
   }
 
